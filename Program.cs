@@ -54,6 +54,5 @@ public class Agendamento
     public string Nome { get; set; }
     public string TipoDeProcedimento { get; set; }
     public DateTime Data { get; set; }
-    public TimeSpan Horario { get; set; }
     public string Telefone { get; set; }
 }
