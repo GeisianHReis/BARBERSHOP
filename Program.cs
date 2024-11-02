@@ -1,41 +1,59 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+var connectionString = $"Server={Environment.GetEnvironmentVariable("DB_SERVER")};" +
+                       $"Database={Environment.GetEnvironmentVariable("DB_NAME")};" +
+                       $"User Id={Environment.GetEnvironmentVariable("DB_USER")};" +
+                       $"Password={Environment.GetEnvironmentVariable("DB_PASSWORD")};";
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
+app.MapGet("/procedimentos", async (AppDbContext db) =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
+    return await db.Agendamentos.ToListAsync();
 })
-.WithName("GetWeatherForecast")
+.WithName("GetProcedimentos")
+.WithOpenApi();
+
+app.MapPost("/procedimentos", async (AppDbContext db, Agendamento novoProcedimento) =>
+{
+    db.Agendamentos.Add(novoProcedimento);
+    await db.SaveChangesAsync();
+    return Results.Created($"/procedimentos/{novoProcedimento.Id}", novoProcedimento);
+})
+.WithName("AddProcedimento")
 .WithOpenApi();
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+public class AppDbContext : DbContext
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+
+    public DbSet<Agendamento> Agendamentos { get; set; }
+}
+
+public class Agendamento
+{
+    public int Id { get; set; }
+    public string Nome { get; set; }
+    public string TipoDeProcedimento { get; set; }
+    public DateTime Data { get; set; }
+    public TimeSpan Horario { get; set; }
+    public string Telefone { get; set; }
 }
