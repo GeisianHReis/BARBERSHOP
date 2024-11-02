@@ -1,4 +1,7 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +11,7 @@ var connectionString = $"Server={Environment.GetEnvironmentVariable("DB_SERVER")
                        $"Password={Environment.GetEnvironmentVariable("DB_PASSWORD")};";
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -48,8 +51,8 @@ public class AppDbContext : DbContext
 public class Agendamento
 {
     public int Id { get; set; }
-    public string Nome { get; set; }
-    public string TipoDeProcedimento { get; set; }
-    public DateTime Data { get; set; }
-    public string Telefone { get; set; }
+    public string? Nome { get; set; }
+    public string? TipoDeProcedimento { get; set; }
+    public DateTime? Data { get; set; }
+    public string? Telefone { get; set; }
 }
