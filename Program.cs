@@ -11,7 +11,7 @@ var connectionString = $"Server={Environment.GetEnvironmentVariable("DB_SERVER")
                        $"Password={Environment.GetEnvironmentVariable("DB_PASSWORD")};";
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(connectionString));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
