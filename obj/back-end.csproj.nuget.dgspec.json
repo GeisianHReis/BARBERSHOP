@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\GeisiandosSantosReis\\Desktop\\faculdade\\back-end\\back-end.csproj": {}
+    "C:\\Users\\GeisiandosSantosReis\\Desktop\\faculdade\\back-end\\back-end.csproj": {}
   },
   "projects": {
-    "c:\\Users\\GeisiandosSantosReis\\Desktop\\faculdade\\back-end\\back-end.csproj": {
+    "C:\\Users\\GeisiandosSantosReis\\Desktop\\faculdade\\back-end\\back-end.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\GeisiandosSantosReis\\Desktop\\faculdade\\back-end\\back-end.csproj",
+        "projectUniqueName": "C:\\Users\\GeisiandosSantosReis\\Desktop\\faculdade\\back-end\\back-end.csproj",
         "projectName": "back-end",
-        "projectPath": "c:\\Users\\GeisiandosSantosReis\\Desktop\\faculdade\\back-end\\back-end.csproj",
+        "projectPath": "C:\\Users\\GeisiandosSantosReis\\Desktop\\faculdade\\back-end\\back-end.csproj",
         "packagesPath": "C:\\Users\\GeisiandosSantosReis\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\GeisiandosSantosReis\\Desktop\\faculdade\\back-end\\obj\\",
+        "outputPath": "C:\\Users\\GeisiandosSantosReis\\Desktop\\faculdade\\back-end\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\GeisiandosSantosReis\\AppData\\Roaming\\NuGet\\NuGet.Config",
